@@ -1,0 +1,155 @@
+{
+  "description": "Dummy Data",
+  "data": [
+    {
+      "kodeJalur": "HL",
+      "waktuSelesai": "01-06-2020",
+      "jumlah": 65
+    },
+    {
+      "kodeJalur": "HL",
+      "waktuSelesai": "02-06-2020",
+      "jumlah": 59
+    },
+    {
+      "kodeJalur": "HL",
+      "waktuSelesai": "03-06-2020",
+      "jumlah": 80
+    },
+    {
+      "kodeJalur": "HL",
+      "waktuSelesai": "04-06-2020",
+      "jumlah": 81
+    },
+    {
+      "kodeJalur": "HL",
+      "waktuSelesai": "05-06-2020",
+      "jumlah": 56
+    },
+    {
+      "kodeJalur": "HL",
+      "waktuSelesai": "06-06-2020",
+      "jumlah": 55
+    },
+    {
+      "kodeJalur": "HL",
+      "waktuSelesai": "07-06-2020",
+      "jumlah": 40
+    },
+    {
+      "kodeJalur": "HL",
+      "waktuSelesai": "08-06-2020",
+      "jumlah": 20
+    },
+    {
+      "kodeJalur": "HL",
+      "waktuSelesai": "09-06-2020",
+      "jumlah": 20
+    },
+    {
+      "kodeJalur": "HL",
+      "waktuSelesai": "10-06-2020",
+      "jumlah": 20
+    },
+    {
+      "kodeJalur": "M",
+      "waktuSelesai": "01-06-2020",
+      "jumlah": 45
+    },
+    {
+      "kodeJalur": "M",
+      "waktuSelesai": "02-06-2020",
+      "jumlah": 79
+    },
+    {
+      "kodeJalur": "M",
+      "waktuSelesai": "03-06-2020",
+      "jumlah": 10
+    },
+    {
+      "kodeJalur": "M",
+      "waktuSelesai": "04-06-2020",
+      "jumlah": 41
+    },
+    {
+      "kodeJalur": "M",
+      "waktuSelesai": "05-06-2020",
+      "jumlah": 16
+    },
+    {
+      "kodeJalur": "M",
+      "waktuSelesai": "06-06-2020",
+      "jumlah": 85
+    },
+    {
+      "kodeJalur": "M",
+      "waktuSelesai": "07-06-2020",
+      "jumlah": 20
+    },
+    {
+      "kodeJalur": "M",
+      "waktuSelesai": "08-06-2020",
+      "jumlah": 40
+    },
+    {
+      "kodeJalur": "M",
+      "waktuSelesai": "09-06-2020",
+      "jumlah": 40
+    },
+    {
+      "kodeJalur": "M",
+      "waktuSelesai": "10-06-2020",
+      "jumlah": 40
+    },
+    {
+      "kodeJalur": "K",
+      "waktuSelesai": "01-06-2020",
+      "jumlah": 45
+    },
+    {
+      "kodeJalur": "K",
+      "waktuSelesai": "02-06-2020",
+      "jumlah": 79
+    },
+    {
+      "kodeJalur": "K",
+      "waktuSelesai": "03-06-2020",
+      "jumlah": 10
+    },
+    {
+      "kodeJalur": "K",
+      "waktuSelesai": "04-06-2020",
+      "jumlah": 41
+    },
+    {
+      "kodeJalur": "K",
+      "waktuSelesai": "05-06-2020",
+      "jumlah": 16
+    },
+    {
+      "kodeJalur": "K",
+      "waktuSelesai": "06-06-2020",
+      "jumlah": 85
+    },
+    {
+      "kodeJalur": "K",
+      "waktuSelesai": "07-06-2020",
+      "jumlah": 20
+    },
+    {
+      "kodeJalur": "K",
+      "waktuSelesai": "08-06-2020",
+      "jumlah": 40
+    },
+    {
+      "kodeJalur": "K",
+      "waktuSelesai": "09-06-2020",
+      "jumlah": 40
+    },
+    {
+      "kodeJalur": "K",
+      "waktuSelesai": "10-06-2020",
+      "jumlah": 40
+    }
+  ]
+}
