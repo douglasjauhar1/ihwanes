@@ -3,7 +3,7 @@ import { Doughnut, Bar } from "react-chartjs-2";
 import { isMoment } from "moment";
 import axios from "axios";
 import "./style.css";
-import * as moment from "moment";
+import moment from "moment";
 
 // IMPORT : DummyData
 import DummyData from "../data/dummyBar.json";
@@ -17,6 +17,7 @@ export default class DokumenSelesai extends Component {
     super(props);
     this.state = {
       dataStatistik: [],
+      tanggalAwal: null,
       tanggalAkhir: null,
       kodePanel: "SD",
       isActive: false,
@@ -46,7 +47,7 @@ export default class DokumenSelesai extends Component {
     this.setState({
       loading: true,
     });
-    if (this.state.isActive == false) {
+    if (this.state.isActive === false) {
       axios({
         method: "GET",
         url:
@@ -132,7 +133,9 @@ export default class DokumenSelesai extends Component {
     console.log(this.state.isActive);
   };
   render() {
+    const tglAwal = JSON.parse(localStorage.getItem("tanggalAwal"));
     const tglAkhir = JSON.parse(localStorage.getItem("tanggalAkhir"));
+    
     const date = moment(tglAkhir, "DD-MM-YYYY");
     let n = date.format("D");
     //  let nilaiDate = tglAkhir.getDate()
@@ -144,12 +147,12 @@ export default class DokumenSelesai extends Component {
       console.log(i);
       b.push(i);
     }
-    
-    const tanggalBulanini = ArrayDate(localStorage.getItem("tanggalAkhir"));
+
+    const tanggalBulanini = ArrayDate(tglAwal, tglAkhir);
     const dataBar = DataBar(DummyData.data, tanggalBulanini);
 
     const data = {
-      labels:  tanggalBulanini,
+      labels: tanggalBulanini,
       datasets: [
         {
           label: "My First dataset",

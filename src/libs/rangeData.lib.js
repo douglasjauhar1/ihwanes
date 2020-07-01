@@ -71,11 +71,19 @@ export const RangeDate = () => {
   return result;
 };
 
-export const ArrayDate = (tanggalAkhir) => {
-  const akhir = Number(tanggalAkhir.split('"')[1].split("-")[2]) + 1;
+export const ArrayDate = (tanggalAwal, tanggalAkhir) => {
+  const dateAwalSplit = tanggalAwal.split("-");
+  const dateAkhirSplit = tanggalAkhir.split("-");
+
+  const dateAwal = new Date(`${dateAwalSplit[1]}-${dateAwalSplit[2]}-${dateAwalSplit[0]}`); 
+  const dateAkhir = new Date(`${dateAkhirSplit[1]}-${dateAkhirSplit[2]}-${dateAkhirSplit[0]}`);
+
+  const Difference_In_Time = dateAkhir.getTime() - dateAwal.getTime();
+  const Difference_In_Days = (Difference_In_Time / (1000 * 3600 * 24)) + 1;
+
   let tanggal = [];
 
-  for(let i = 1; i < akhir; i++) {
+  for(let i = 1; i <= Difference_In_Days; i++) {
     tanggal.push(i);
   }
   

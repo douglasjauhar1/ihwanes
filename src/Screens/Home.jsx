@@ -26,8 +26,8 @@ class Home extends React.Component {
     const date = RangeDate();
 
     this.setState({
-      timeStart: date[0],
-      timeEnd: date[1],
+      timeStart: moment(date[0]).format("DD-MM-YYYY"),
+      timeEnd: moment(date[1]).format("DD-MM-YYYY"),
     });
     localStorage.setItem(
       "tanggalAwal",
@@ -44,8 +44,20 @@ class Home extends React.Component {
       visible: flag,
     });
   };
-  onChangeDate = (value) => {
-    console.log(value[0]);
+  onChangeDate = (date) => {
+    const timeStart = moment(date[0]).format("DD-MM-YYYY");
+    const timeEnd = moment(date[1]).format("DD-MM-YYYY");
+
+    this.setState({ timeStart, timeEnd });
+
+    localStorage.setItem(
+      "tanggalAwal",
+      JSON.stringify(moment(date[0]).format("YYYY-MM-DD"))
+    );
+    localStorage.setItem(
+      "tanggalAkhir",
+      JSON.stringify(moment(date[1]).format("YYYY-MM-DD"))
+    );
   };
   handleOnClick = (e) => {
     if (e.key == "1") {
@@ -100,7 +112,7 @@ class Home extends React.Component {
   };
 
   render() {
-    console.log("time", this.state.timeStart);
+    // console.log(`[debug] 時間 : ${this.state.timeStart} - ${this.state.timeEnd}`);
     const menu = (
       <Menu onClick={this.handleOnClick}>
         <Menu.Item key="1">Kemarin</Menu.Item>
@@ -108,8 +120,8 @@ class Home extends React.Component {
         <Menu.Item key="3">
           <RangePicker
             onChange={this.onChangeDate}
-            value={[moment(this.state.timeStart), moment(this.state.timeEnd)]}
-            format={dateFormat}
+            defaultValue={[moment(this.state.timeStart, "DD-MM-YYYY"), moment(this.state.timeEnd,"DD-MM-YYYY")]}
+            format={"DD-MM-YYYY"}
           />
         </Menu.Item>
       </Menu>
