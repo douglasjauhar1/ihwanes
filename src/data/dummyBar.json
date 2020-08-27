@@ -38,16 +38,6 @@
     },
     {
       "kodeJalur": "HL",
-      "waktuSelesai": "08-06-2020",
-      "jumlah": 20
-    },
-    {
-      "kodeJalur": "HL",
-      "waktuSelesai": "09-06-2020",
-      "jumlah": 20
-    },
-    {
-      "kodeJalur": "HL",
       "waktuSelesai": "10-06-2020",
       "jumlah": 20
     },
@@ -70,11 +60,6 @@
       "kodeJalur": "M",
       "waktuSelesai": "04-06-2020",
       "jumlah": 41
-    },
-    {
-      "kodeJalur": "M",
-      "waktuSelesai": "05-06-2020",
-      "jumlah": 16
     },
     {
       "kodeJalur": "M",
@@ -123,11 +108,6 @@
     },
     {
       "kodeJalur": "K",
-      "waktuSelesai": "05-06-2020",
-      "jumlah": 16
-    },
-    {
-      "kodeJalur": "K",
       "waktuSelesai": "06-06-2020",
       "jumlah": 85
     },
@@ -144,11 +124,6 @@
     {
       "kodeJalur": "K",
       "waktuSelesai": "09-06-2020",
-      "jumlah": 40
-    },
-    {
-      "kodeJalur": "K",
-      "waktuSelesai": "10-06-2020",
       "jumlah": 40
     }
   ]

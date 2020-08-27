@@ -71,21 +71,133 @@ export const RangeDate = () => {
   return result;
 };
 
-export const ArrayDate = (tanggalAwal, tanggalAkhir) => {
-  const dateAwalSplit = tanggalAwal.split("-");
-  const dateAkhirSplit = tanggalAkhir.split("-");
+/**
+ * @author Pratama "Sam1Dz" Dimas
+ * @param {string} startDate Tanggal Awal
+ * @param {string} endDate Tanggal Akhir
+ * @returns {string[]} Return Data berisi Range Tanggal berdasarkan Range yang dipilih user
+ */
 
-  const dateAwal = new Date(`${dateAwalSplit[1]}-${dateAwalSplit[2]}-${dateAwalSplit[0]}`); 
-  const dateAkhir = new Date(`${dateAkhirSplit[1]}-${dateAkhirSplit[2]}-${dateAkhirSplit[0]}`);
+export const ArrayDate = (startDate, endDate) => {
+  /* CONFIG VARIABLE */
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "Mei",
+    "Jun",
+    "Jul",
+    "Agu",
+    "Sep",
+    "Okt",
+    "Nov",
+    "Des",
+  ];
+  const startDateSplit = startDate.split("-");
+  const endDateSplit = endDate.split("-");
 
-  const Difference_In_Time = dateAkhir.getTime() - dateAwal.getTime();
-  const Difference_In_Days = (Difference_In_Time / (1000 * 3600 * 24)) + 1;
+  const startYear = Number(startDateSplit[0]);
+  const endYear = Number(endDateSplit[0]);
+  const startMonth = Number(startDateSplit[1]) - 1;
+  const endMonth = Number(endDateSplit[1]) - 1;
 
-  let tanggal = [];
+  /* MAIN VARIABLE */
+  let rangeMonthInAYear = [];
+  let monthRange = [];
+  let dateBar = [];
 
-  for(let i = 1; i <= Difference_In_Days; i++) {
-    tanggal.push(i);
+  // console.log("[debug] ArrayDate @startDateSplit", startDateSplit);
+  // console.log("[debug] ArrayDate @endDateSplit", endDateSplit);
+
+  /* CHECK IF IS LEAP YEAR */
+  const leapYear = (year) => {
+    if (Number(year) % 4 === 0) {
+      if (Number(year) % 100 === 0) {
+        if (Number(year) % 400 === 0) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  /* GENERATE DATE BAR */
+  const generateDateBar = (dateStart, dateEnd, month, year) => {
+    for (let i = dateStart; i <= dateEnd; i++) {
+      const dateVar = `${i < 10 ? `0${i}` : i}-${
+        month < 10 ? `0${month}` : month
+      }-${year}`;
+      dateBar.push(dateVar);
+    }
+  };
+
+  /* COMPLICATED LOGIC */
+  // Generate rangeMonthInAYear
+  if (startYear === endYear) {
+    rangeMonthInAYear.push(endMonth - startMonth);
+  } else {
+    for (let i = startYear; i <= endYear; i++) {
+      if (startYear === i) {
+        rangeMonthInAYear.push(11 - startMonth);
+      } else if (endYear === i) {
+        rangeMonthInAYear.push(0 + endMonth);
+      } else {
+        rangeMonthInAYear.push(11);
+      }
+    }
   }
-  
-  return tanggal;
-}
+
+  // Generate monthRange
+  for (let i = 0; i < rangeMonthInAYear.length; i++) {
+    for (let j = 0; j <= rangeMonthInAYear[i]; j++) {
+      if (rangeMonthInAYear.length !== 1) {
+        if (i === rangeMonthInAYear.length - 1) {
+          monthRange.push(0 + j);
+        } else {
+          monthRange.push(11 - rangeMonthInAYear[i] + j);
+        }
+      } else {
+        monthRange.push(startMonth + j);
+      }
+    }
+  }
+
+  // Generate Date
+  let yearGenerateDate = startYear;
+  for (let i = 0; i < monthRange.length; i++) {
+    if (monthRange[i] === 0) yearGenerateDate++;
+
+    if (monthRange[i] === 1) {
+      if (leapYear(yearGenerateDate)) {
+        generateDateBar(1, 29, monthRange[i] + 1, yearGenerateDate);
+      } else {
+        generateDateBar(1, 28, monthRange[i] + 1, yearGenerateDate);
+      }
+    } else {
+      if (
+        monthRange[i] === 0 ||
+        monthRange[i] === 2 ||
+        monthRange[i] === 4 ||
+        monthRange[i] === 6 ||
+        monthRange[i] === 7 ||
+        monthRange[i] === 9 ||
+        monthRange[i] === 11
+      ) {
+        generateDateBar(1, 31, monthRange[i] + 1, yearGenerateDate);
+      } else {
+        generateDateBar(1, 30, monthRange[i] + 1, yearGenerateDate);
+      }
+    }
+  }
+
+  // console.log(rangeMonthInAYear);
+  // console.log(monthRange)
+
+  return dateBar;
+};

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Doughnut, Bar } from "react-chartjs-2";
-import { isMoment } from "moment";
+import { Bar } from "react-chartjs-2";
+import Moment from "moment";
 import axios from "axios";
 import "./style.css";
 import moment from "moment";
@@ -25,7 +25,7 @@ export default class DokumenSelesai extends Component {
   }
   componentDidUpdate(prevProps, prevState) {
     let newData = JSON.parse(localStorage.getItem("tanggalAkhir"));
-    if (newData != this.state.tanggalAkhir) {
+    if (newData !== this.state.tanggalAkhir) {
       this.getDataStatistik();
       this.setState({
         tanggalAkhir: newData,
@@ -135,7 +135,7 @@ export default class DokumenSelesai extends Component {
   render() {
     const tglAwal = JSON.parse(localStorage.getItem("tanggalAwal"));
     const tglAkhir = JSON.parse(localStorage.getItem("tanggalAkhir"));
-    
+
     const date = moment(tglAkhir, "DD-MM-YYYY");
     let n = date.format("D");
     //  let nilaiDate = tglAkhir.getDate()
@@ -151,38 +151,31 @@ export default class DokumenSelesai extends Component {
     const tanggalBulanini = ArrayDate(tglAwal, tglAkhir);
     const dataBar = DataBar(DummyData.data, tanggalBulanini);
 
+    console.log("[debug] dataBar", dataBar);
+
     const data = {
       labels: tanggalBulanini,
       datasets: [
         {
-          label: "My First dataset",
-          backgroundColor: "rgba(26, 188, 156, 1.0)",
-          borderColor: "rgba(26, 188, 156, 1.0)",
+          label: "Jalur Hijau",
+          backgroundColor: "green",
           borderWidth: 1,
           stack: 1,
-          hoverBackgroundColor: "rgba(255,99,132,0.4)",
-          hoverBorderColor: "rgba(255,99,132,1)",
-          data: dataBar[0],
+          data: dataBar[0].data,
         },
         {
-          label: "My second dataset",
-          backgroundColor: "rgba(240, 52, 52, 1)",
-          borderColor: "rgba(255,99,132,1)",
+          label: "Jalur Merah",
+          backgroundColor: "red",
           borderWidth: 1,
           stack: 1,
-          hoverBackgroundColor: "rgba(255,99,132,0.4)",
-          hoverBorderColor: "rgba(255,99,132,1)",
-          data: dataBar[2],
+          data: dataBar[2].data,
         },
         {
-          label: "My second dataset",
+          label: "Jalur Kuning",
           backgroundColor: "yellow",
-          borderColor: "rgba(255,99,132,1)",
           borderWidth: 1,
           stack: 1,
-          hoverBackgroundColor: "rgba(255,99,132,0.4)",
-          hoverBorderColor: "rgba(255,99,132,1)",
-          data: dataBar[1],
+          data: dataBar[1].data,
         },
       ],
     };
@@ -227,7 +220,7 @@ export default class DokumenSelesai extends Component {
             </div>
           </div>
           <div
-            class={this.state.isActive == false ? "column active" : "column"}
+            class={this.state.isActive === false ? "column active" : "column"}
           >
             <div id="block3">
               <p onClick={this.changeData2}>Dokumen Per Hari</p>
