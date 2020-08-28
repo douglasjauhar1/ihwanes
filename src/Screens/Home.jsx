@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Dropdown, Menu, message, Card, DatePicker } from "antd";
-import * as moment from "moment";
+import { Dropdown, Menu, Card, DatePicker } from "antd";
+import Moment from "moment";
 import StatistikDokumen from "./StatistikDokumen";
 import Denda from "./Denda";
 import DokumenSelesai from "./DokumenSelesai";
@@ -11,7 +11,6 @@ import KonfirmasiNilaiPabean from "./KonfirmasiNilaiPabean";
 import { RangeDate } from "../libs/rangeData.lib";
 
 const { RangePicker } = DatePicker;
-const dateFormat = "DD-MM-YYYY";
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -22,21 +21,16 @@ class Home extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const date = RangeDate();
-
-    this.setState({
-      timeStart: moment(date[0]).format("DD-MM-YYYY"),
-      timeEnd: moment(date[1]).format("DD-MM-YYYY"),
-    });
-    localStorage.setItem(
-      "tanggalAwal",
-      JSON.stringify(date[0])
-    );
-    localStorage.setItem(
-      "tanggalAkhir",
-      JSON.stringify(date[1])
-    );
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.tglAwal !== prevProps.tglAwal ||
+      this.props.tglAkhir !== prevProps.tglAkhir
+    ) {
+      this.setState({
+        timeStart: Moment(this.props.tglAwal).format("DD-MM-YYYY"),
+        timeEnd: Moment(this.props.tglAkhir).format("DD-MM-YYYY"),
+      });
+    }
   }
 
   handleVisible = (flag) => {
@@ -45,18 +39,18 @@ class Home extends React.Component {
     });
   };
   onChangeDate = (date) => {
-    const timeStart = moment(date[0]).format("DD-MM-YYYY");
-    const timeEnd = moment(date[1]).format("DD-MM-YYYY");
+    const timeStart = Moment(date[0]).format("DD-MM-YYYY");
+    const timeEnd = Moment(date[1]).format("DD-MM-YYYY");
 
     this.setState({ timeStart, timeEnd });
 
     localStorage.setItem(
       "tanggalAwal",
-      JSON.stringify(moment(date[0]).format("YYYY-MM-DD"))
+      JSON.stringify(Moment(date[0]).format("YYYY-MM-DD"))
     );
     localStorage.setItem(
       "tanggalAkhir",
-      JSON.stringify(moment(date[1]).format("YYYY-MM-DD"))
+      JSON.stringify(Moment(date[1]).format("YYYY-MM-DD"))
     );
   };
   handleOnClick = (e) => {
@@ -68,7 +62,7 @@ class Home extends React.Component {
         timeEnd: localStorage.setItem(
           "tanggalAkhir",
           JSON.stringify(
-            moment(new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)).format(
+            Moment(new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)).format(
               "DD-MM-YYYY"
             )
           )
@@ -76,12 +70,12 @@ class Home extends React.Component {
       });
       localStorage.setItem(
         "tanggalAwal",
-        JSON.stringify(moment(this.state.timeStart).format("DD-MM-YYYY"))
+        JSON.stringify(Moment(this.state.timeStart).format("DD-MM-YYYY"))
       );
       localStorage.setItem(
         "tanggalAkhir",
         JSON.stringify(
-          moment(new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)).format(
+          Moment(new Date(Date.now() - 1 * 24 * 60 * 60 * 1000)).format(
             "DD-MM-YYYY"
           )
         )
@@ -89,22 +83,22 @@ class Home extends React.Component {
       // alert(this.state.timeStart)
     }
     if (e.key == "2") {
-      let timeEnd = moment().subtract(7, "days").calendar();
+      let timeEnd = Moment().subtract(7, "days").calendar();
       this.setState({
         visible: false,
         timeStart: new Date(),
         timeEnd: localStorage.setItem(
           "tanggalAkhir",
-          JSON.stringify(moment().subtract(7, "days").format("DD-MM-YYYY"))
+          JSON.stringify(Moment().subtract(7, "days").format("DD-MM-YYYY"))
         ),
       });
       localStorage.setItem(
         "tanggalAwal",
-        JSON.stringify(moment(this.state.timeStart).format("DD-MM-YYYY"))
+        JSON.stringify(Moment(this.state.timeStart).format("DD-MM-YYYY"))
       );
       localStorage.setItem(
         "tanggalAkhir",
-        JSON.stringify(moment().subtract(7, "days").format("DD-MM-YYYY"))
+        JSON.stringify(Moment().subtract(7, "days").format("DD-MM-YYYY"))
       );
     }
     if (e.key == "3") {
@@ -120,7 +114,10 @@ class Home extends React.Component {
         <Menu.Item key="3">
           <RangePicker
             onChange={this.onChangeDate}
-            defaultValue={[moment(this.state.timeStart, "DD-MM-YYYY"), moment(this.state.timeEnd,"DD-MM-YYYY")]}
+            defaultValue={[
+              Moment(this.state.timeStart, "DD-MM-YYYY"),
+              Moment(this.state.timeEnd, "DD-MM-YYYY"),
+            ]}
             format={"DD-MM-YYYY"}
           />
         </Menu.Item>

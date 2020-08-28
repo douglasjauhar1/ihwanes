@@ -80,20 +80,6 @@ export const RangeDate = () => {
 
 export const ArrayDate = (startDate, endDate) => {
   /* CONFIG VARIABLE */
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "Mei",
-    "Jun",
-    "Jul",
-    "Agu",
-    "Sep",
-    "Okt",
-    "Nov",
-    "Des",
-  ];
   const startDateSplit = startDate.split("-");
   const endDateSplit = endDate.split("-");
 
@@ -101,6 +87,8 @@ export const ArrayDate = (startDate, endDate) => {
   const endYear = Number(endDateSplit[0]);
   const startMonth = Number(startDateSplit[1]) - 1;
   const endMonth = Number(endDateSplit[1]) - 1;
+  const startDay = Number(startDateSplit[2]);
+  const endDay = Number(endDateSplit[2]);
 
   /* MAIN VARIABLE */
   let rangeMonthInAYear = [];
@@ -109,6 +97,12 @@ export const ArrayDate = (startDate, endDate) => {
 
   // console.log("[debug] ArrayDate @startDateSplit", startDateSplit);
   // console.log("[debug] ArrayDate @endDateSplit", endDateSplit);
+
+  // console.log("[debug] startMonth?", startMonth);
+  // console.log("[debug] endMonth?", endMonth);
+
+  // console.log("[debug] rangeMonthInAYear?", rangeMonthInAYear);
+  // console.log("[debug] monthRange?", monthRange);
 
   /* CHECK IF IS LEAP YEAR */
   const leapYear = (year) => {
@@ -127,7 +121,6 @@ export const ArrayDate = (startDate, endDate) => {
     }
   };
 
-  /* GENERATE DATE BAR */
   const generateDateBar = (dateStart, dateEnd, month, year) => {
     for (let i = dateStart; i <= dateEnd; i++) {
       const dateVar = `${i < 10 ? `0${i}` : i}-${
@@ -137,61 +130,95 @@ export const ArrayDate = (startDate, endDate) => {
     }
   };
 
+  /** [DONT TOUCH!! START FROM BELLOW THIS LINE] **/
+
   /* COMPLICATED LOGIC */
-  // Generate rangeMonthInAYear
-  if (startYear === endYear) {
-    rangeMonthInAYear.push(endMonth - startMonth);
+  // GENERATE DATE BAR
+  if (startMonth === endMonth && startYear === endYear) {
+    generateDateBar(startDay, endDay, startMonth + 1, startYear);
   } else {
-    for (let i = startYear; i <= endYear; i++) {
-      if (startYear === i) {
-        rangeMonthInAYear.push(11 - startMonth);
-      } else if (endYear === i) {
-        rangeMonthInAYear.push(0 + endMonth);
-      } else {
-        rangeMonthInAYear.push(11);
+    // Generate rangeMonthInAYear
+    if (startYear === endYear) {
+      rangeMonthInAYear.push(endMonth - startMonth);
+    } else {
+      for (let i = startYear; i <= endYear; i++) {
+        if (startYear === i) {
+          rangeMonthInAYear.push(11 - startMonth);
+        } else if (endYear === i) {
+          rangeMonthInAYear.push(0 + endMonth);
+        } else {
+          rangeMonthInAYear.push(11);
+        }
       }
     }
-  }
 
-  // Generate monthRange
-  for (let i = 0; i < rangeMonthInAYear.length; i++) {
-    for (let j = 0; j <= rangeMonthInAYear[i]; j++) {
-      if (rangeMonthInAYear.length !== 1) {
-        if (i === rangeMonthInAYear.length - 1) {
-          monthRange.push(0 + j);
+    // Generate monthRange
+    for (let i = 0; i < rangeMonthInAYear.length; i++) {
+      for (let j = 0; j <= rangeMonthInAYear[i]; j++) {
+        if (rangeMonthInAYear.length !== 1) {
+          if (i === rangeMonthInAYear.length - 1) {
+            monthRange.push(0 + j);
+          } else {
+            monthRange.push(11 - rangeMonthInAYear[i] + j);
+          }
         } else {
-          monthRange.push(11 - rangeMonthInAYear[i] + j);
+          monthRange.push(startMonth + j);
+        }
+      }
+    }
+
+    // Generate Date
+    let yearGenerateDate = startYear;
+    for (let i = 0; i < monthRange.length; i++) {
+      const firstDate = i === 0 ? startDay : 1;
+      let lastDate = 31;
+
+      if (monthRange[i] === 0) yearGenerateDate++;
+
+      if (monthRange[i] === 1) {
+        if (leapYear(yearGenerateDate)) {
+          lastDate = i === monthRange.length - 1 ? endDay : 29;
+          generateDateBar(
+            firstDate,
+            lastDate,
+            monthRange[i] + 1,
+            yearGenerateDate
+          );
+        } else {
+          lastDate = i === monthRange.length - 1 ? endDay : 28;
+          generateDateBar(
+            firstDate,
+            lastDate,
+            monthRange[i] + 1,
+            yearGenerateDate
+          );
         }
       } else {
-        monthRange.push(startMonth + j);
-      }
-    }
-  }
-
-  // Generate Date
-  let yearGenerateDate = startYear;
-  for (let i = 0; i < monthRange.length; i++) {
-    if (monthRange[i] === 0) yearGenerateDate++;
-
-    if (monthRange[i] === 1) {
-      if (leapYear(yearGenerateDate)) {
-        generateDateBar(1, 29, monthRange[i] + 1, yearGenerateDate);
-      } else {
-        generateDateBar(1, 28, monthRange[i] + 1, yearGenerateDate);
-      }
-    } else {
-      if (
-        monthRange[i] === 0 ||
-        monthRange[i] === 2 ||
-        monthRange[i] === 4 ||
-        monthRange[i] === 6 ||
-        monthRange[i] === 7 ||
-        monthRange[i] === 9 ||
-        monthRange[i] === 11
-      ) {
-        generateDateBar(1, 31, monthRange[i] + 1, yearGenerateDate);
-      } else {
-        generateDateBar(1, 30, monthRange[i] + 1, yearGenerateDate);
+        if (
+          monthRange[i] === 0 ||
+          monthRange[i] === 2 ||
+          monthRange[i] === 4 ||
+          monthRange[i] === 6 ||
+          monthRange[i] === 7 ||
+          monthRange[i] === 9 ||
+          monthRange[i] === 11
+        ) {
+          lastDate = i === monthRange.length - 1 ? endDay : 31;
+          generateDateBar(
+            firstDate,
+            lastDate,
+            monthRange[i] + 1,
+            yearGenerateDate
+          );
+        } else {
+          lastDate = i === monthRange.length - 1 ? endDay : 30;
+          generateDateBar(
+            firstDate,
+            lastDate,
+            monthRange[i] + 1,
+            yearGenerateDate
+          );
+        }
       }
     }
   }

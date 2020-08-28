@@ -151,7 +151,8 @@ export default class DokumenSelesai extends Component {
     const tanggalBulanini = ArrayDate(tglAwal, tglAkhir);
     const dataBar = DataBar(DummyData.data, tanggalBulanini);
 
-    console.log("[debug] dataBar", dataBar);
+    //console.log("[debug] tanggalBulanini?", tanggalBulanini);
+    // console.log("[debug] dataBar?", dataBar);
 
     const data = {
       labels: tanggalBulanini,
